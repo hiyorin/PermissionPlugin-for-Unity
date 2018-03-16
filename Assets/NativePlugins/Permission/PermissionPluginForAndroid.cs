@@ -5,7 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 /// <summary>
-/// AndroidのPermission関連プラグイン
+/// Permission plugin for Android.
 /// </summary>
 public class PermissionPluginForAndroid : PermissionPlugin.Interface
 {
@@ -21,7 +21,7 @@ public class PermissionPluginForAndroid : PermissionPlugin.Interface
     private bool _isRequestRunning = false;
 
     /// <summary>
-    /// 許可されているか確認する
+    /// Check permissions.
     /// </summary>
     /// <param name="permission"></param>
     /// <param name="onResult"></param>
@@ -36,7 +36,6 @@ public class PermissionPluginForAndroid : PermissionPlugin.Interface
                 permissionString = PermissionCamera;
                 break;
             case PermissionPlugin.Permission.Gallery:
-                // Intentでキャラリーを開く想定のため
                 SystemUtility.SafeCall(onResult, true);
                 yield break;
             case PermissionPlugin.Permission.Location:
@@ -49,7 +48,7 @@ public class PermissionPluginForAndroid : PermissionPlugin.Interface
                 permissionString = PermissionStorage;
                 break;
             default:
-                Debug.LogErrorFormat("{0}が未定義です", permission);
+                Debug.LogErrorFormat("{0} is undefined.", permission);
                 SystemUtility.SafeCall(onResult, false);
                 yield break;
         }
@@ -76,7 +75,7 @@ public class PermissionPluginForAndroid : PermissionPlugin.Interface
     }
 
     /// <summary>
-    /// 許可を求めるリクエストをする
+    /// Request permissions.
     /// </summary>
     /// <param name="permission"></param>
     /// <param name="onResult"></param>
@@ -97,7 +96,6 @@ public class PermissionPluginForAndroid : PermissionPlugin.Interface
                 permissionString = PermissionCamera;
                 break;
             case PermissionPlugin.Permission.Gallery:
-                // Intentでギャラリーを開く想定のため
                 SystemUtility.SafeCall(onResult, true);
                 yield break;
             case PermissionPlugin.Permission.Location:
@@ -110,7 +108,7 @@ public class PermissionPluginForAndroid : PermissionPlugin.Interface
                 permissionString = PermissionStorage;
                 break;
             default:
-                Debug.LogErrorFormat("{0}が未定義です", permission);
+                Debug.LogErrorFormat("{0} is undefined.", permission);
                 SystemUtility.SafeCall(onResult, false);
                 yield break;
         }
@@ -128,7 +126,7 @@ public class PermissionPluginForAndroid : PermissionPlugin.Interface
     }
 
     /// <summary>
-    /// Permission設定画面を開く
+    /// Open permission setting screen.
     /// </summary>
     /// <param name="permission">Permission.</param>
     public override void Open(PermissionPlugin.Permission permission)
@@ -154,8 +152,8 @@ public class PermissionPluginForAndroid : PermissionPlugin.Interface
     }
 
     /// <summary>
-    /// requestSelfPermissionで許可された
-    /// NativeからのUnitySendNessage
+    /// Permited. requestSelfPermission callback.
+    /// UnitySendNessage from native.
     /// </summary>
     /// <param name="permissoinSting"></param>
     private void OnRequestPermissionSuccessed(string permissoinSting)
@@ -164,8 +162,8 @@ public class PermissionPluginForAndroid : PermissionPlugin.Interface
     }
 
     /// <summary>
-    /// requestSelfPermissionで許可されなかった
-    /// NativeからのUnitySendMessage
+    /// Not permited. requestSelfPermission callback.
+    /// UnitySendMessage from native.
     /// </summary>
     /// <param name="permissionString"></param>
     private void OnRequestPermissionFailed(string permissionString)

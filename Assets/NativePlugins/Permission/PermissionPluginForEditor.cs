@@ -3,12 +3,12 @@ using System;
 using System.Collections;
 
 /// <summary>
-/// UnityEditor用のPermission関連プラグイン
+/// Permission plugin for UnityEditor.
 /// </summary>
 public class PermissionPluginForEditor : PermissionPlugin.Interface
 {
     /// <summary>
-    /// 許可されているか確認する
+    /// Check permissions.
     /// </summary>
     /// <param name="permission"></param>
     /// <param name="onResult"></param>
@@ -20,7 +20,7 @@ public class PermissionPluginForEditor : PermissionPlugin.Interface
     }
     
     /// <summary>
-    /// 許可を求めるリクエストをする
+    /// Request permissions.
     /// </summary>
     /// <param name="permission"></param>
     /// <param name="onResult"></param>
@@ -32,7 +32,7 @@ public class PermissionPluginForEditor : PermissionPlugin.Interface
     }
 
 	/// <summary>
-	/// Permission設定画面を開く
+    /// Open permission setting screen.
 	/// </summary>
 	/// <param name="permission">Permission.</param>
 	public override void Open (PermissionPlugin.Permission permission)

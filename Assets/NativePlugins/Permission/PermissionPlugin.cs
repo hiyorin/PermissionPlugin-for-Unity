@@ -3,17 +3,17 @@ using System;
 using System.Collections;
 
 /// <summary>
-/// Permissino関連のプラグイン
+/// Permissino plugin.
 /// </summary>
 public class PermissionPlugin : SingletonMonoBehaviour<PermissionPlugin>
 {
     /// <summary>
-    /// プラットフォームごとのインターフェイス
+    /// Interface per platform.
     /// </summary>
     public abstract class Interface : MonoBehaviour
     {
         /// <summary>
-        /// 許可されているか確認する
+        /// Check permissions.
         /// </summary>
         /// <param name="permission"></param>
         /// <param name="onResult"></param>
@@ -21,7 +21,7 @@ public class PermissionPlugin : SingletonMonoBehaviour<PermissionPlugin>
         public abstract IEnumerator Check(Permission permission, Action<bool> onResult);
 
         /// <summary>
-        /// 許可を求めるリクエストをする
+        /// Request permissions.
         /// </summary>
         /// <param name="permission"></param>
         /// <param name="onResult"></param>
@@ -29,7 +29,7 @@ public class PermissionPlugin : SingletonMonoBehaviour<PermissionPlugin>
         public abstract IEnumerator Request(Permission permission, Action<bool> onResult);
 
 		/// <summary>
-		/// Permission設定画面を開く
+		/// Open permission setting screen.
 		/// </summary>
 		/// <param name="permission">Permission.</param>
 		public abstract void Open(Permission permission);
@@ -55,7 +55,7 @@ public class PermissionPlugin : SingletonMonoBehaviour<PermissionPlugin>
     private Interface _interface;
 
     /// <summary>
-    /// 初期化されるときに呼ばれます
+    /// Called at initialization
     /// </summary>
     protected override void OnInitialize()
     {
@@ -70,7 +70,7 @@ public class PermissionPlugin : SingletonMonoBehaviour<PermissionPlugin>
     }
 
     /// <summary>
-    /// 許可されているか確認する
+    /// Check permissions.
     /// </summary>
     /// <param name="permission"></param>
     /// <param name="onResult"></param>
@@ -81,7 +81,7 @@ public class PermissionPlugin : SingletonMonoBehaviour<PermissionPlugin>
     }
 
     /// <summary>
-    /// 許可を求めるリクエストをする
+    /// Request permissions.
     /// </summary>
     /// <param name="permission"></param>
     /// <param name="onResult"></param>
@@ -92,7 +92,7 @@ public class PermissionPlugin : SingletonMonoBehaviour<PermissionPlugin>
     }
 
 	/// <summary>
-	/// Permissionの設定画面を開く
+    /// Open permission setting screen.
 	/// </summary>
 	/// <param name="permission">Permission.</param>
 	public void Open(Permission permission)

@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 
 /// <summary>
-/// iOS用のPerssmission関連プラグイン
+/// Permission plugin for iOS.
 /// </summary>
 public class PermissionPluginForIOS : PermissionPlugin.Interface
 {
@@ -20,14 +20,14 @@ public class PermissionPluginForIOS : PermissionPlugin.Interface
 	private static extern void _RequestPermission(int type);
 
 	[DllImport("__Internal")]
-	private static extern void _OpenPermission (string url);
+	private static extern void _OpenPermission(string url);
 
 	private readonly Dictionary<int, bool> _permissionResult = new Dictionary<int, bool>();
 
 	private bool _isRequestRunning = false;
     
     /// <summary>
-    /// 許可されているか確認する
+    /// Check permissions.
     /// </summary>
     /// <param name="permission"></param>
     /// <param name="onResult"></param>
@@ -45,7 +45,7 @@ public class PermissionPluginForIOS : PermissionPlugin.Interface
     }
 
     /// <summary>
-    /// 許可を求めるリクエストをする
+    /// Request permissions.
     /// </summary>
     /// <param name="permission"></param>
     /// <param name="onResult"></param>
@@ -68,10 +68,10 @@ public class PermissionPluginForIOS : PermissionPlugin.Interface
     }
 
 	/// <summary>
-	/// Permission設定画面を開く
+    /// Open permission setting screen.
 	/// </summary>
 	/// <param name="permission">Permission.</param>
-	public override void Open (PermissionPlugin.Permission permission)
+	public override void Open(PermissionPlugin.Permission permission)
 	{
 		switch (permission)
 		{
@@ -82,32 +82,10 @@ public class PermissionPluginForIOS : PermissionPlugin.Interface
 				_OpenPermission("root=Privacy&path=PHOTOS");
 				break;
 			default:
-				Debug.LogError ("{0}が未定義です");
+                Debug.LogErrorFormat("{0} is undefined.", permission);
 				break;
 		}
-	}
-
-	/// <summary>
-	/// RequestPermissionで許可された
-	/// NativeからのUnitySendNessage
-	/// </summary>
-	/// <param name="typeSting"></param>
-	private void OnRequestPermissionSuccessed(string typeString)
-	{
-		int type = int.Parse(typeString);
-		_permissionResult.Add(type, true);
-	}
-
-	/// <summary>
-	/// RequestPermissionで許可されなかった
-	/// NativeからのUnitySendMessage
-	/// </summary>
-	/// <param name="typeString"></param>
-	private void OnRequestPermissionFailed(string typeString)
-	{
-		int type = int.Parse(typeString);
-		_permissionResult.Add(type, false);
-	}
+    }
 
     /// <summary>
     /// Androids the request permissions result.
@@ -119,5 +97,27 @@ public class PermissionPluginForIOS : PermissionPlugin.Interface
     {
 
     }
+
+    /// <summary>
+    /// Permited. requestSelfPermission callback.
+    /// UnitySendNessage from native.
+    /// </summary>
+    /// <param name="permissoinSting"></param>
+	private void OnRequestPermissionSuccessed(string typeString)
+	{
+		int type = int.Parse(typeString);
+		_permissionResult.Add(type, true);
+    }
+
+    /// <summary>
+    /// Not permited. requestSelfPermission callback.
+    /// UnitySendMessage from native.
+    /// </summary>
+    /// <param name="permissionString"></param>
+	private void OnRequestPermissionFailed(string typeString)
+	{
+		int type = int.Parse(typeString);
+		_permissionResult.Add(type, false);
+	}
 }
 #endif
