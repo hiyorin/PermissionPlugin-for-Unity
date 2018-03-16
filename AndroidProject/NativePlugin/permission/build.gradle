@@ -1,0 +1,59 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion 25
+    buildToolsVersion "25.0.0"
+
+    defaultConfig {
+        minSdkVersion 9
+        targetSdkVersion 23
+        versionCode 1
+        versionName "1.0"
+        multiDexEnabled true
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+
+    compile 'com.android.support:appcompat-v7:25.2.0'
+    compile 'com.android.support:support-core-utils:25.2.0'
+    testCompile 'junit:junit:4.12'
+
+}
+
+android.libraryVariants.all { variant ->
+    variant.outputs.each { output ->
+        output.packageLibrary.exclude('libs/classes.jar')
+    }
+}
+
+task exportAar(type: Copy)  {
+    from('build/outputs/aar/')
+    into('../../../Assets/NativePlugins/Permission/Plugins/Android/')
+    include('permission-release.aar')
+    include('support-core-utils-25.2.0.aar')
+    include('support-compat-25.2.0.aar')
+    rename('permission-release.aar', 'permission-lib.aar')
+}
+
+task copyLibs(type: Copy) {
+    from configurations.compile
+    into 'build/outputs/aar'
+    exclude { details -> details.file.name.endsWith("*.jar") }
+    include "support-core-utils-25.2.0.aar"
+    include "support-compat-25.2.0.aar"
+}
+
