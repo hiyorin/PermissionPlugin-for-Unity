@@ -4,4 +4,7 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/NativePlugins/Permission/Example/PermissionTest.unity
+    guid: dc323d7504fdab340b757b06897763c1
