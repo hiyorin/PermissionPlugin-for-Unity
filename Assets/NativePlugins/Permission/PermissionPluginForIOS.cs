@@ -38,9 +38,9 @@ public class PermissionPluginForIOS : PermissionPlugin.Interface
 		{
 			yield return Request(permission, onResult);
 		}
-		else
-		{
-			SystemUtility.SafeCall(onResult, _CheckPermission((int)permission));
+		else if (onResult != null)
+        {
+            onResult(_CheckPermission((int)permission));
 		}
     }
 
@@ -62,7 +62,8 @@ public class PermissionPluginForIOS : PermissionPlugin.Interface
 
 		_isRequestRunning = true;
 		yield return new WaitUntil(() => _permissionResult.ContainsKey((int)permission));
-		SystemUtility.SafeCall(onResult, _permissionResult[(int)permission]);
+        if (onResult != null)
+            onResult(_permissionResult[(int)permission]);
 		_permissionResult.Remove((int)permission);
 		_isRequestRunning = false;
     }

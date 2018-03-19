@@ -36,7 +36,8 @@ public class PermissionPluginForAndroid : PermissionPlugin.Interface
                 permissionString = PermissionCamera;
                 break;
             case PermissionPlugin.Permission.Gallery:
-                SystemUtility.SafeCall(onResult, true);
+                if (onResult != null)
+                    onResult(true);
                 yield break;
             case PermissionPlugin.Permission.Location:
                 permissionString = PermissionLocation;
@@ -49,7 +50,8 @@ public class PermissionPluginForAndroid : PermissionPlugin.Interface
                 break;
             default:
                 Debug.LogErrorFormat("{0} is undefined.", permission);
-                SystemUtility.SafeCall(onResult, false);
+                if (onResult != null)
+                    onResult(false);
                 yield break;
         }
 
@@ -61,15 +63,14 @@ public class PermissionPluginForAndroid : PermissionPlugin.Interface
                 yield return Request(permission, isRequestSuccess =>
                 {
                     if (!isRequestSuccess)
-                    {
-                       PlayerPrefs.SetInt(permissionString, 1);
-                    }
-                    SystemUtility.SafeCall(onResult, isRequestSuccess);
+                        PlayerPrefs.SetInt(permissionString, 1);
+                    if (onResult != null)
+                        onResult(isRequestSuccess);
                 });
             }
-            else
+            else if (onResult != null)
             {
-                SystemUtility.SafeCall(onResult, isSuccess);
+                onResult(isSuccess);
             }
         }
     }
@@ -96,7 +97,8 @@ public class PermissionPluginForAndroid : PermissionPlugin.Interface
                 permissionString = PermissionCamera;
                 break;
             case PermissionPlugin.Permission.Gallery:
-                SystemUtility.SafeCall(onResult, true);
+                if (onResult != null)
+                    onResult(true);
                 yield break;
             case PermissionPlugin.Permission.Location:
                 permissionString = PermissionLocation;
@@ -109,7 +111,8 @@ public class PermissionPluginForAndroid : PermissionPlugin.Interface
                 break;
             default:
                 Debug.LogErrorFormat("{0} is undefined.", permission);
-                SystemUtility.SafeCall(onResult, false);
+                if (onResult != null)
+                    onResult(false);
                 yield break;
         }
         
@@ -120,7 +123,8 @@ public class PermissionPluginForAndroid : PermissionPlugin.Interface
 
         _isRequestRunning = true;
         yield return new WaitUntil(() => _permissionResult.ContainsKey(permissionString));
-        SystemUtility.SafeCall(onResult, _permissionResult[permissionString]);
+        if (onResult != null)
+            onResult(_permissionResult[permissionString]);
         _permissionResult.Remove(permissionString);
         _isRequestRunning = false;
     }

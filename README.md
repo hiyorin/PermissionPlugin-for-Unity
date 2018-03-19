@@ -9,7 +9,7 @@ PermissionPlugin.unitypackage
 ```cs
 public IEnumerator Example()
 {
-  yield return PermissionPlugin.Instance.Check(PermissionPlugin.Permission.Camera, result =
+  yield return PermissionPlugin.Check(PermissionPlugin.Permission.Camera, result =
   {
     Debug.Log(result);
   });
@@ -20,7 +20,7 @@ public IEnumerator Example()
 ```cs
 public IEnumerator Example()
 {
-  yield return PermissionPlugin.Instance.Request(PermissionPlugin.Permission.Camera, result =>
+  yield return PermissionPlugin.Request(PermissionPlugin.Permission.Camera, result =>
   {
     Debug.Log(result);
   });
@@ -31,7 +31,7 @@ public IEnumerator Example()
 ```cs
 public void Example()
 {
-  PermissionPlugin.Instance.Open(PermissionPlugin.Permission.Camera);
+  PermissionPlugin.Open(PermissionPlugin.Permission.Camera);
 }
 ```
 
@@ -40,6 +40,6 @@ Please pass the value of OnRequestPermissionsResult of your Activity
 ```cs
 public void Exapmle(int requestCode, string[] permissions, int[] grantResults)
 {
-  PermissionPlugin.Instance.AndroidRequestPermissionsResult(requestCode, permissions, grantResults);
+  PermissionPlugin.AndroidRequestPermissionsResult(requestCode, permissions, grantResults);
 }
 ```

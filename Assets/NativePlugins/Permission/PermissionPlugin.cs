@@ -5,7 +5,7 @@ using System.Collections;
 /// <summary>
 /// Permissino plugin.
 /// </summary>
-public class PermissionPlugin : SingletonMonoBehaviour<PermissionPlugin>
+public sealed class PermissionPlugin : MonoBehaviour
 {
     /// <summary>
     /// Interface per platform.
@@ -52,21 +52,26 @@ public class PermissionPlugin : SingletonMonoBehaviour<PermissionPlugin>
         Storage,
     }
 
-    private Interface _interface;
+    private static PermissionPlugin _instance = null;
+    private static bool _isInitialized = false;
+    private static bool _isDestroyed = false;
 
-    /// <summary>
-    /// Called at initialization
-    /// </summary>
-    protected override void OnInitialize()
+    private static PermissionPlugin Instance
     {
-        _interface =
-#if UNITY_EDITOR
-            gameObject.AddComponent<PermissionPluginForEditor>();
-#elif UNITY_ANDROID
-            gameObject.AddComponent<PermissionPluginForAndroid>();
-#elif UNITY_IOS
-            gameObject.AddComponent<PermissionPluginForIOS>();
-#endif
+        get
+        {
+            if (!_isDestroyed && _instance == null)
+            {
+                _instance = FindObjectOfType<PermissionPlugin>();
+                if (_instance == null)
+                {
+                    GameObject gameObject = new GameObject (typeof(PermissionPlugin).Name);
+                    _instance = gameObject.AddComponent<PermissionPlugin>();
+                    _instance.Initialize();
+                }
+            }
+            return _instance;
+        }
     }
 
     /// <summary>
@@ -75,9 +80,12 @@ public class PermissionPlugin : SingletonMonoBehaviour<PermissionPlugin>
     /// <param name="permission"></param>
     /// <param name="onResult"></param>
     /// <returns>CoroutineEnumerator</returns>
-    public IEnumerator Check(Permission permission, Action<bool> onResult)
+    public static IEnumerator Check(Permission permission, Action<bool> onResult)
     {
-        yield return _interface.Check(permission, onResult);
+        if (Instance != null)
+            yield return Instance._interface.Check(permission, onResult);
+        else
+            yield break;
     }
 
     /// <summary>
@@ -86,19 +94,23 @@ public class PermissionPlugin : SingletonMonoBehaviour<PermissionPlugin>
     /// <param name="permission"></param>
     /// <param name="onResult"></param>
     /// <returns>CoroutineEnumerator</returns>
-    public IEnumerator Request(Permission permission, Action<bool> onResult)
+    public static IEnumerator Request(Permission permission, Action<bool> onResult)
     {
-        yield return _interface.Request(permission, onResult);
+        if (Instance != null)
+            yield return Instance._interface.Request(permission, onResult);
+        else
+            yield break;
     }
 
-	/// <summary>
+    /// <summary>
     /// Open permission setting screen.
-	/// </summary>
-	/// <param name="permission">Permission.</param>
-	public void Open(Permission permission)
-	{
-		_interface.Open(permission);
-	}
+    /// </summary>
+    /// <param name="permission">Permission.</param>
+    public static void Open(Permission permission)
+    {
+        if (Instance != null)
+            Instance._interface.Open(permission);
+    }
 
     /// <summary>
     /// Androids the request permissions result.
@@ -106,8 +118,51 @@ public class PermissionPlugin : SingletonMonoBehaviour<PermissionPlugin>
     /// <param name="requestCode">Request code.</param>
     /// <param name="permissions">Permissions.</param>
     /// <param name="grantResults">Grant results.</param>
-    public void AndroidRequestPermissionsResult(int requestCode, string[] permissions, int[] grantResults)
+    private static void AndroidRequestPermissionsResult(int requestCode, string[] permissions, int[] grantResults)
     {
-        _interface.AndroidRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (Instance != null)
+            Instance._interface.AndroidRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
+
+    private Interface _interface;
+
+    private void Awake()
+    {
+        if (_instance == null)
+            _instance = gameObject.GetComponent<PermissionPlugin>();
+        else if (_instance != this)
+        {
+            _instance.OnDestroy();
+            _instance = gameObject.GetComponent<PermissionPlugin>();
+        }
+
+        DontDestroyOnLoad(this);
+        Initialize();
+    }
+
+    private void OnDestroy()
+    {
+        if (this == _instance)
+        {
+            _instance = null;
+            _isDestroyed = true;
+        }
+        Destroy(this);
+    }
+
+    private void Initialize()
+    {
+        if (_isInitialized)
+            return;
+        _isInitialized = true;
+        
+        _interface =
+#if UNITY_EDITOR
+            gameObject.AddComponent<PermissionPluginForEditor>();
+#elif UNITY_ANDROID
+            gameObject.AddComponent<PermissionPluginForAndroid>();
+#elif UNITY_IOS
+            gameObject.AddComponent<PermissionPluginForIOS>();
+#endif
     }
 }

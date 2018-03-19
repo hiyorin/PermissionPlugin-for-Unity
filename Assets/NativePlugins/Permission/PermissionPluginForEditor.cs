@@ -15,7 +15,8 @@ public class PermissionPluginForEditor : PermissionPlugin.Interface
     /// <returns>CoroutineEnumerator</returns>
     public override IEnumerator Check(PermissionPlugin.Permission permission, Action<bool> onResult)
     {
-        SystemUtility.SafeCall(onResult, true);
+        if (onResult != null)
+            onResult(true);
         yield break;
     }
     
@@ -27,7 +28,8 @@ public class PermissionPluginForEditor : PermissionPlugin.Interface
     /// <returns>CoroutineEnumerator</returns>
     public override IEnumerator Request(PermissionPlugin.Permission permission, Action<bool> onResult)
     {
-        SystemUtility.SafeCall(onResult, true);
+        if (onResult != null)
+            onResult(true);
         yield break;
     }
 

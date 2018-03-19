@@ -17,7 +17,7 @@ namespace sandbox
         private IEnumerator Start()
         {
             bool isCheckSuccess = false;
-            yield return PermissionPlugin.Instance.Check(PermissionPlugin.Permission.Camera, result => isCheckSuccess = result);
+            yield return PermissionPlugin.Check(PermissionPlugin.Permission.Camera, result => isCheckSuccess = result);
             if (isCheckSuccess)
             {
                 _log += "Use of the camera is permitted.\n";
@@ -25,7 +25,7 @@ namespace sandbox
             else
             {
                 _log += "Open permission dialog\n";
-				PermissionPlugin.Instance.Open(PermissionPlugin.Permission.Camera);
+				PermissionPlugin.Open(PermissionPlugin.Permission.Camera);
             }
         }
     }
