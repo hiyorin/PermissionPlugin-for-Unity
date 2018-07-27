@@ -5,11 +5,15 @@ A set of tools for Unity to allow handling Permission for Android and iOS.
 PermissionPlugin.unitypackage
 
 # Usage
+```cs
+using Permission;
+```
+
 #### Example: Check permissions.
 ```cs
 public IEnumerator Example()
 {
-  yield return PermissionPlugin.Check(PermissionPlugin.Permission.Camera, result =
+  yield return PermissionPlugin.Check(PermissionType.Camera, result =
   {
     Debug.Log(result);
   });
@@ -20,7 +24,7 @@ public IEnumerator Example()
 ```cs
 public IEnumerator Example()
 {
-  yield return PermissionPlugin.Request(PermissionPlugin.Permission.Camera, result =>
+  yield return PermissionPlugin.Request(PermissionType.Camera, result =>
   {
     Debug.Log(result);
   });
@@ -31,7 +35,7 @@ public IEnumerator Example()
 ```cs
 public void Example()
 {
-  PermissionPlugin.Open(PermissionPlugin.Permission.Camera);
+  PermissionPlugin.Open(PermissionType.Camera);
 }
 ```
 
