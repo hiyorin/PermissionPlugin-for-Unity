@@ -1,8 +1,8 @@
-﻿using UnityEngine;
-using UnityEngine.UI;
-using System.Collections;
+﻿using System.Collections;
+using UnityEngine;
+using Permission;
 
-namespace sandbox
+namespace Sandbox
 {
     public class PermissionTest : MonoBehaviour
     {
@@ -17,7 +17,7 @@ namespace sandbox
         private IEnumerator Start()
         {
             bool isCheckSuccess = false;
-            yield return PermissionPlugin.Check(PermissionPlugin.Permission.Camera, result => isCheckSuccess = result);
+            yield return PermissionPlugin.Check(PermissionPlugin.Permission.Location, result => isCheckSuccess = result);
             if (isCheckSuccess)
             {
                 _log += "Use of the camera is permitted.\n";
