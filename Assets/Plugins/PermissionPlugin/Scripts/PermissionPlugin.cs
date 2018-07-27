@@ -43,7 +43,7 @@ namespace Permission
             /// <param name="requestCode">Request code.</param>
             /// <param name="permissions">Permissions.</param>
             /// <param name="grantResults">Grant results.</param>
-            public abstract void AndroidRequestPermissionsResult(int requestCode, string [] permissions, int [] grantResults);
+            public abstract void AndroidRequestPermissionsResult(int requestCode, string[] permissions, int[] grantResults);
         }
 
         public enum Permission
@@ -119,7 +119,7 @@ namespace Permission
         /// <param name="requestCode">Request code.</param>
         /// <param name="permissions">Permissions.</param>
         /// <param name="grantResults">Grant results.</param>
-        private static void AndroidRequestPermissionsResult(int requestCode, string [] permissions, int [] grantResults)
+        public static void AndroidRequestPermissionsResult(int requestCode, string[] permissions, int[] grantResults)
         {
             if (Instance != null)
                 Instance._interface.AndroidRequestPermissionsResult(requestCode, permissions, grantResults);
