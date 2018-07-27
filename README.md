@@ -35,6 +35,15 @@ public void Example()
 }
 ```
 
+# AndroidManifest.xml
+Replace main Activity.
+```xml
+<!--
+<activity android:name="com.unity3d.player.UnityPlayerActivity" ...
+-->
+<activity android:name="com.hiyorin.permission.CustomUnityPlayerActivity" ...
+```
+
 # When using your own UnityPlayerActivity
 Please pass the value of OnRequestPermissionsResult of your Activity
 ```cs
