@@ -15,7 +15,7 @@ namespace Permission.Internal
         /// <param name="permission"></param>
         /// <param name="onResult"></param>
         /// <returns>CoroutineEnumerator</returns>
-        public override IEnumerator Check(PermissionPlugin.Permission permission, Action<bool> onResult)
+        public override IEnumerator Check(PermissionType permission, Action<bool> onResult)
         {
             if (onResult != null)
                 onResult(true);
@@ -28,7 +28,7 @@ namespace Permission.Internal
         /// <param name="permission"></param>
         /// <param name="onResult"></param>
         /// <returns>CoroutineEnumerator</returns>
-        public override IEnumerator Request(PermissionPlugin.Permission permission, Action<bool> onResult)
+        public override IEnumerator Request(PermissionType permission, Action<bool> onResult)
         {
             if (onResult != null)
                 onResult(true);
@@ -39,7 +39,7 @@ namespace Permission.Internal
         /// Open permission setting screen.
         /// </summary>
         /// <param name="permission">Permission.</param>
-        public override void Open(PermissionPlugin.Permission permission)
+        public override void Open(PermissionType permission)
         {
 
         }

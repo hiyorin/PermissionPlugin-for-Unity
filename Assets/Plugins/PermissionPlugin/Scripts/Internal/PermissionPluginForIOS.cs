@@ -34,7 +34,7 @@ namespace Permission.Internal
         /// <param name="permission"></param>
         /// <param name="onResult"></param>
         /// <returns>CoroutineEnumerator</returns>
-        public override IEnumerator Check(PermissionPlugin.Permission permission, Action<bool> onResult)
+        public override IEnumerator Check(PermissionType permission, Action<bool> onResult)
         {
             if (_CheckPermissionNotDetermined((int)permission))
             {
@@ -52,7 +52,7 @@ namespace Permission.Internal
         /// <param name="permission"></param>
         /// <param name="onResult"></param>
         /// <returns>CoroutineEnumerator</returns>
-        public override IEnumerator Request(PermissionPlugin.Permission permission, Action<bool> onResult)
+        public override IEnumerator Request(PermissionType permission, Action<bool> onResult)
         {
             if (_isRequestRunning)
             {
@@ -74,14 +74,14 @@ namespace Permission.Internal
         /// Open permission setting screen.
         /// </summary>
         /// <param name="permission">Permission.</param>
-        public override void Open(PermissionPlugin.Permission permission)
+        public override void Open(PermissionType permission)
         {
             switch (permission)
             {
-                case PermissionPlugin.Permission.Camera:
+                case PermissionType.Camera:
                     _OpenPermission("root=Privacy&path=CAMERA");
                     break;
-                case PermissionPlugin.Permission.Gallery:
+                case PermissionType.Gallery:
                     _OpenPermission("root=Privacy&path=PHOTOS");
                     break;
                 default:

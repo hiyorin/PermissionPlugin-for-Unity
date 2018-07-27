@@ -28,26 +28,26 @@ namespace Permission.Internal
         /// <param name="permission"></param>
         /// <param name="onResult"></param>
         /// <returns>CoroutineEnumerator</returns>
-        public override IEnumerator Check(PermissionPlugin.Permission permission, Action<bool> onResult)
+        public override IEnumerator Check(PermissionType permission, Action<bool> onResult)
         {
             string permissionString = string.Empty;
 
             switch (permission)
             {
-                case PermissionPlugin.Permission.Camera:
+                case PermissionType.Camera:
                     permissionString = PermissionCamera;
                     break;
-                case PermissionPlugin.Permission.Gallery:
+                case PermissionType.Gallery:
                     if (onResult != null)
                         onResult(true);
                     yield break;
-                case PermissionPlugin.Permission.Location:
+                case PermissionType.Location:
                     permissionString = PermissionLocation;
                     break;
-                case PermissionPlugin.Permission.Bluetooth:
+                case PermissionType.Bluetooth:
                     permissionString = PermissionBluetooth;
                     break;
-                case PermissionPlugin.Permission.Storage:
+                case PermissionType.Storage:
                     permissionString = PermissionStorage;
                     break;
                 default:
@@ -82,7 +82,7 @@ namespace Permission.Internal
         /// <param name="permission"></param>
         /// <param name="onResult"></param>
         /// <returns>CoroutineEnumerator</returns>
-        public override IEnumerator Request(PermissionPlugin.Permission permission, Action<bool> onResult)
+        public override IEnumerator Request(PermissionType permission, Action<bool> onResult)
         {
             if (_isRequestRunning)
             {
@@ -94,20 +94,20 @@ namespace Permission.Internal
 
             switch (permission)
             {
-                case PermissionPlugin.Permission.Camera:
+                case PermissionType.Camera:
                     permissionString = PermissionCamera;
                     break;
-                case PermissionPlugin.Permission.Gallery:
+                case PermissionType.Gallery:
                     if (onResult != null)
                         onResult(true);
                     yield break;
-                case PermissionPlugin.Permission.Location:
+                case PermissionType.Location:
                     permissionString = PermissionLocation;
                     break;
-                case PermissionPlugin.Permission.Bluetooth:
+                case PermissionType.Bluetooth:
                     permissionString = PermissionBluetooth;
                     break;
-                case PermissionPlugin.Permission.Storage:
+                case PermissionType.Storage:
                     permissionString = PermissionStorage;
                     break;
                 default:
@@ -134,7 +134,7 @@ namespace Permission.Internal
         /// Open permission setting screen.
         /// </summary>
         /// <param name="permission">Permission.</param>
-        public override void Open(PermissionPlugin.Permission permission)
+        public override void Open(PermissionType permission)
         {
             using (AndroidJavaClass plugin = new AndroidJavaClass(ClassName))
             {

@@ -21,7 +21,7 @@ namespace Permission
             /// <param name="permission"></param>
             /// <param name="onResult"></param>
             /// <returns>CoroutineEnumerator</returns>
-            public abstract IEnumerator Check(Permission permission, Action<bool> onResult);
+            public abstract IEnumerator Check(PermissionType permission, Action<bool> onResult);
 
             /// <summary>
             /// Request permissions.
@@ -29,13 +29,13 @@ namespace Permission
             /// <param name="permission"></param>
             /// <param name="onResult"></param>
             /// <returns>CoroutineEnumerator</returns>
-            public abstract IEnumerator Request(Permission permission, Action<bool> onResult);
+            public abstract IEnumerator Request(PermissionType permission, Action<bool> onResult);
 
             /// <summary>
             /// Open permission setting screen.
             /// </summary>
             /// <param name="permission">Permission.</param>
-            public abstract void Open(Permission permission);
+            public abstract void Open(PermissionType permission);
 
             /// <summary>
             /// Androids the request permissions result.
@@ -44,15 +44,6 @@ namespace Permission
             /// <param name="permissions">Permissions.</param>
             /// <param name="grantResults">Grant results.</param>
             public abstract void AndroidRequestPermissionsResult(int requestCode, string[] permissions, int[] grantResults);
-        }
-
-        public enum Permission
-        {
-            Camera = 0,
-            Gallery,
-            Location,
-            Bluetooth,
-            Storage,
         }
 
         private static PermissionPlugin _instance = null;
@@ -81,7 +72,7 @@ namespace Permission
         /// <param name="permission"></param>
         /// <param name="onResult"></param>
         /// <returns>CoroutineEnumerator</returns>
-        public static IEnumerator Check(Permission permission, Action<bool> onResult)
+        public static IEnumerator Check(PermissionType permission, Action<bool> onResult)
         {
             if (Instance != null)
                 yield return Instance._interface.Check(permission, onResult);
@@ -95,7 +86,7 @@ namespace Permission
         /// <param name="permission"></param>
         /// <param name="onResult"></param>
         /// <returns>CoroutineEnumerator</returns>
-        public static IEnumerator Request(Permission permission, Action<bool> onResult)
+        public static IEnumerator Request(PermissionType permission, Action<bool> onResult)
         {
             if (Instance != null)
                 yield return Instance._interface.Request(permission, onResult);
@@ -107,7 +98,7 @@ namespace Permission
         /// Open permission setting screen.
         /// </summary>
         /// <param name="permission">Permission.</param>
-        public static void Open(Permission permission)
+        public static void Open(PermissionType permission)
         {
             if (Instance != null)
                 Instance._interface.Open(permission);
