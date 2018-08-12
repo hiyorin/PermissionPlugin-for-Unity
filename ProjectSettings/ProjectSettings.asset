@@ -545,7 +545,7 @@ PlayerSettings:
     iOS: 1
   incrementalIl2cppBuild: {}
   additionalIl2CppArgs: 
-  scriptingRuntimeVersion: 0
+  scriptingRuntimeVersion: 1
   apiCompatibilityLevelPerPlatform:
     iOS: 2
   m_RenderingPath: 1
