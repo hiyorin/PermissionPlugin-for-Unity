@@ -155,6 +155,9 @@ namespace Permission
                 gameObject.AddComponent<PermissionPluginForAndroid>();
 #elif UNITY_IOS
                 gameObject.AddComponent<PermissionPluginForIOS>();
+#else
+                null;
+            Debug.unityLogger.LogError(GetType().Name, "This platform not supported.");
 #endif
         }
     }

@@ -9,7 +9,7 @@ namespace Permission.Internal
     /// <summary>
     /// Permission plugin for Android.
     /// </summary>
-    public class PermissionPluginForAndroid : PermissionPlugin.Interface
+    internal class PermissionPluginForAndroid : PermissionPlugin.Interface
     {
         private const string ClassName = "com.hiyorin.permission.PermissionPlugin";
 

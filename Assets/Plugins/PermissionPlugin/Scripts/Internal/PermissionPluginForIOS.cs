@@ -10,7 +10,7 @@ namespace Permission.Internal
     /// <summary>
     /// Permission plugin for iOS.
     /// </summary>
-    public class PermissionPluginForIOS : PermissionPlugin.Interface
+    internal class PermissionPluginForIOS : PermissionPlugin.Interface
     {
         [DllImport("__Internal")]
         private static extern bool _CheckPermission(int type);

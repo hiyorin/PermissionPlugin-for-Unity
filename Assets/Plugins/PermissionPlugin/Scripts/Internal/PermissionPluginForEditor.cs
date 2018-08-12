@@ -7,7 +7,7 @@ namespace Permission.Internal
     /// <summary>
     /// Permission plugin for UnityEditor.
     /// </summary>
-    public class PermissionPluginForEditor : PermissionPlugin.Interface
+    internal class PermissionPluginForEditor : PermissionPlugin.Interface
     {
         /// <summary>
         /// Check permissions.
